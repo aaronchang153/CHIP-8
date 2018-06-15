@@ -1,5 +1,14 @@
 #include "Chip8.h"
 
+typedef void (*Chip8_Opcode)(Chip8 *c);
+
+Chip8_Opcode chip8_table[16] = 
+    {
+        &Chip8_Decode_0xxx, &Chip8_Decode_1xxx, &Chip8_Decode_2xxx, &Chip8_Decode_3xxx,
+        &Chip8_Decode_4xxx, &Chip8_Decode_5xxx, &Chip8_Decode_6xxx, &Chip8_Decode_7xxx,
+        &Chip8_Decode_8xxx, &Chip8_Decode_9xxx, &Chip8_Decode_Axxx, &Chip8_Decode_Bxxx,
+        &Chip8_Decode_Cxxx, &Chip8_Decode_Dxxx, &Chip8_Decode_Exxx, &Chip8_Decode_Fxxx
+    };
 
 unsigned char chip8_fontset[80] =
     {
@@ -43,4 +52,13 @@ void Chip8_Init(Chip8 *c){
             c->memory[i] = chip8_fontset[i];
         }
     }
+    srand(time(NULL));
+}
+
+void Chip8_EmulateCycle(Chip8 *c){
+    // Fetch
+    c->opcode = (c->memory[c->pc] << 8) | c->memory[c->pc + 1];
+    
+    // Decode and execute
+    chip8_table[(c->opcode & 0xF000) >> 12](c);
 }
