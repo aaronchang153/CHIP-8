@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define VX(n)       (0x0F00 & n)>>8
 #define VY(n)       (0x00F0 & n)>>4
@@ -26,11 +27,48 @@ typedef struct{
     unsigned char gfx[64 * 32];
 } Chip8;
 
+// Initialization
 Chip8 *Chip8_Create();
 
 void Chip8_Destroy(Chip8 *c);
 
 void Chip8_Init(Chip8 *c);
+
+// Emulate a single instruction cycle
+void Chip8_EmulateCycle(Chip8 *c);
+
+// Decode and Execute
+void Chip8_Decode_0xxx(Chip8 *c);
+
+void Chip8_Decode_1xxx(Chip8 *c);
+
+void Chip8_Decode_2xxx(Chip8 *c);
+
+void Chip8_Decode_3xxx(Chip8 *c);
+
+void Chip8_Decode_4xxx(Chip8 *c);
+
+void Chip8_Decode_5xxx(Chip8 *c);
+
+void Chip8_Decode_6xxx(Chip8 *c);
+
+void Chip8_Decode_7xxx(Chip8 *c);
+
+void Chip8_Decode_8xxx(Chip8 *c);
+
+void Chip8_Decode_9xxx(Chip8 *c);
+
+void Chip8_Decode_Axxx(Chip8 *c);
+
+void Chip8_Decode_Bxxx(Chip8 *c);
+
+void Chip8_Decode_Cxxx(Chip8 *c);
+
+void Chip8_Decode_Dxxx(Chip8 *c);
+
+void Chip8_Decode_Exxx(Chip8 *c);
+
+void Chip8_Decode_Fxxx(Chip8 *c);
 
 
 #endif // CHIP8_H
