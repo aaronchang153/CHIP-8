@@ -1,6 +1,7 @@
 #ifndef CHIP8_H
 #define CHIP8_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -33,6 +34,8 @@ Chip8 *Chip8_Create();
 void Chip8_Destroy(Chip8 *c);
 
 void Chip8_Init(Chip8 *c);
+
+char Chip8_Load_Application(Chip8 *c, char *name);
 
 // Emulate a single instruction cycle
 void Chip8_EmulateCycle(Chip8 *c);
