@@ -15,25 +15,6 @@
 #define MEMORY_SIZE 4096
 
 typedef struct{
-    unsigned short key_0 : 1;
-    unsigned short key_1 : 1;
-    unsigned short key_2 : 1;
-    unsigned short key_3 : 1;
-    unsigned short key_4 : 1;
-    unsigned short key_5 : 1;
-    unsigned short key_6 : 1;
-    unsigned short key_7 : 1;
-    unsigned short key_8 : 1;
-    unsigned short key_9 : 1;
-    unsigned short key_A : 1;
-    unsigned short key_B : 1;
-    unsigned short key_C : 1;
-    unsigned short key_D : 1;
-    unsigned short key_E : 1;
-    unsigned short key_F : 1;
-} KEY_STATE;
-
-typedef struct{
     unsigned short opcode;
     unsigned char V[16];
     unsigned short pc;
@@ -45,7 +26,7 @@ typedef struct{
     unsigned char sound_timer;
     unsigned char gfx[64 * 32];
     unsigned char draw_flag;
-    KEY_STATE key;
+    unsigned char key_presses[16];
 } Chip8;
 
 // Initialization
