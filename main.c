@@ -1,5 +1,6 @@
 #include "Chip8.h"
 #include "Graphics.h"
+#include "Input.h"
 #include "SDL.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +15,7 @@ int SDL_main(int argc, char *argv[]){
             Chip8_Load_Application(chip8, "games/INVADERS");
 
             SDL_Event event;
+            int key_index;
 
             char running = 1;
             while(running){
@@ -23,8 +25,11 @@ int SDL_main(int argc, char *argv[]){
                             running = 0;
                             break;
                         case SDL_KEYDOWN:
-                            break;
                         case SDL_KEYUP:
+                            key_index = mapKeyPress(event.key.keysym.scancode);
+                            if(key_index >= 0){
+                                chip8->key_presses[getKeypadValue(key_index)] = (event.type == SDL_KEYDOWN) ? 1 : 0;
+                            }
                             break;
                     };
                 }
