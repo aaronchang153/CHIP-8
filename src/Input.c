@@ -16,35 +16,28 @@ int keymap[] =
         SDL_SCANCODE_Z, SDL_SCANCODE_X, SDL_SCANCODE_C, SDL_SCANCODE_V
     };
 
-unsigned char getKeypadValue(int index){
-    if(index >= 0 && index < 16){
-        return keypad[index];
-    }
-    return -1;
-}
 
-unsigned char mapKeyPress(int scancode){
-    char key_index = -1;
+int mapKeyPress(int scancode){
+    char key = -1;
     int i;
     for(i = 0; i < 16; i++){
         if(keymap[i] == scancode){
-            key_index = i;
+            key = keypad[i];
             break;
         }
     }
-    return key_index;
+    return key;
 }
 
-unsigned char blockingInput(){
+int blockingInput(){
     SDL_Event e;
-    int key_index;
+    char key;
     while(SDL_PollEvent(&e)){
         if(e.type == SDL_KEYDOWN){
-            key_index = mapKeyPress(e.key.keysym.scancode);
-            if(key_index >= 0 && key_index < 16){
-                return keypad[key_index];
+            if((key = mapKeyPress(e.key.keysym.scancode)) >= 0){
+                return key;
             }
         }
     }
-    return 0;
+    return -1;
 }

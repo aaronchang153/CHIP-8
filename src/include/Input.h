@@ -3,10 +3,8 @@
 
 #include "SDL.h"
 
-unsigned char getKeypadValue(int index);
+int mapKeyPress(int scancode);
 
-unsigned char mapKeyPress(int scancode);
-
-unsigned char blockingInput();
+int blockingInput();
 
 #endif // INPUT_H
