@@ -10,8 +10,11 @@ Chip8.o : src/Chip8.c src/include/Chip8.h
 Graphics.o : src/Graphics.c src/include/Graphics.h
 	gcc $(INCLUDE) $(CFLAGS) src/Graphics.c -o obj/Graphics.o
 
+Input.o : src/Input.c src/include/Input.h
+	gcc $(INCLUDE) $(CFLAGS) src/Input.c -o obj/Input.o
+
 main.o : main.c
 	gcc $(INCLUDE) $(CFLAGS) main.c -o obj/main.o
 
-Chip8 : Chip8.o Graphics.o main.o
-	gcc $(INCLUDE) obj/main.o obj/Chip8.o obj/Graphics.o $(LFLAGS) -o bin/Chip8.exe
+Chip8 : Chip8.o Graphics.o Input.o main.o
+	gcc $(INCLUDE) obj/main.o obj/Chip8.o obj/Graphics.o obj/Input.o $(LFLAGS) -o bin/Chip8.exe
