@@ -12,10 +12,10 @@ int SDL_main(int argc, char *argv[]){
         Graphics *display = Graphics_Create();
         if(display != NULL){
 
-            Chip8_Load_Application(chip8, "games/INVADERS");
+            Chip8_Load_Application(chip8, "games/TANK");
 
             SDL_Event event;
-            int key_index;
+            int key;
 
             char running = 1;
             while(running){
@@ -26,9 +26,9 @@ int SDL_main(int argc, char *argv[]){
                             break;
                         case SDL_KEYDOWN:
                         case SDL_KEYUP:
-                            key_index = mapKeyPress(event.key.keysym.scancode);
-                            if(key_index >= 0){
-                                chip8->key_presses[getKeypadValue(key_index)] = (event.type == SDL_KEYDOWN) ? 1 : 0;
+                            key = mapKeyPress(event.key.keysym.scancode);
+                            if(key >= 0){
+                                chip8->key_presses[key] = (event.type == SDL_KEYDOWN) ? 1 : 0;
                             }
                             break;
                     };
@@ -38,7 +38,7 @@ int SDL_main(int argc, char *argv[]){
                     Graphics_Draw_Screen(display, chip8->gfx);
                     chip8->draw_flag = 0;
                 }
-                SDL_Delay(10);
+                SDL_Delay(5);
             }
 
             Graphics_Destroy(display);
