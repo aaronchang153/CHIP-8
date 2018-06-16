@@ -84,6 +84,9 @@ void Chip8_EmulateCycle(Chip8 *c){
         c->delay_timer--;
     }
     if(c->sound_timer > 0){
+        if(c->sound_timer == 1){
+            printf("BEEP!\n");
+        }
         c->sound_timer--;
     }
 }
@@ -217,7 +220,7 @@ void Chip8_Decode_Cxxx(Chip8 *c){
 }
 
 void Chip8_Decode_Dxxx(Chip8 *c){
-    // 0xDXYN: Draw 8xN sprite at (VX, VY) on screen (set VF if collision)
+    // 0xDXYN: Draw 8xN sprite at location I at (VX, VY) on screen (set VF if collision)
     unsigned char pixel;
     int x, y;
     int xline, yline;
@@ -247,6 +250,7 @@ void Chip8_Decode_Exxx(Chip8 *c){
         case 0xA1: // 0xEXA1: Skip next inst if key stored in VX is not pressed
             break;
     }
+    c->pc += 2;
 }
 
 void Chip8_Decode_Fxxx(Chip8 *c){
@@ -269,7 +273,7 @@ void Chip8_Decode_Fxxx(Chip8 *c){
             c->I += c->V[X(c->opcode)];
             break;
         case 0x29: // 0xFX29: I = <location of sprite for character in VX>
-            c->I = c->memory[(X(c->opcode)) * 5];
+            c->I = (X(c->opcode)) * 5;
             break;
         case 0x33: // 0xFX33: Stores BCD of VX in I, I+1, I+2 (big-end)
             temp = c->V[X(c->opcode)];
@@ -288,4 +292,5 @@ void Chip8_Decode_Fxxx(Chip8 *c){
             }
             break;
     }
+    c->pc += 2;
 }
