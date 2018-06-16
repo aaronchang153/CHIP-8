@@ -215,7 +215,7 @@ void Chip8_Decode_Bxxx(Chip8 *c){
 
 void Chip8_Decode_Cxxx(Chip8 *c){
     // 0xCXNN: VX = <random byte> & NN
-    c->V[X(c->opcode)] = IMM8(c->opcode) & ((char) (rand() & 256));
+    c->V[X(c->opcode)] = IMM8(c->opcode) & ((char) (rand() % 256));
     c->pc += 2;
 }
 
@@ -228,14 +228,14 @@ void Chip8_Decode_Dxxx(Chip8 *c){
     x = c->V[X(c->opcode)];
     y = c->V[Y(c->opcode)];
 
-    for(yline = c->I; yline < IMM4(c->opcode); yline++){
-        pixel = c->memory[yline];
+    for(yline = 0; yline < IMM4(c->opcode); yline++){
+        pixel = c->memory[c->I + yline];
         for(xline = 0; xline < 8; xline++){
             if((pixel & (0x80 >> xline)) != 0){
-                if(c->gfx[x + xline + ((y + yline) * 32)] == 1){
+                if(c->gfx[(x + xline) + ((y + yline) * 64)] == 1){
                     c->V[0xF] = 1;
                 }
-                c->gfx[x + xline + ((y + yline) * 32)] ^= 1;
+                c->gfx[(x + xline) + ((y + yline) * 64)] ^= 1;
             }
         }
     }
