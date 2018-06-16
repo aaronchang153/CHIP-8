@@ -1,6 +1,7 @@
 #ifndef CHIP8_H
 #define CHIP8_H
 
+#include "Input.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
