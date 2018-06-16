@@ -1,5 +1,5 @@
-INCLUDE = -I src/include #-I ./SDL2 -L ./lib
-LFLAGS = -Wall -g -lmingw32# -lSDL2main -lSDL2 #-Wl,-subsystem,windows
+INCLUDE = -I src/include -I SDL2/include/SDL2 -L SDL2/lib -L SDL2/bin
+LFLAGS = -Wall -g -lmingw32 -lSDL2main -lSDL2 #-Wl,-subsystem,windows
 CFLAGS = -Wall -c -g
 
 all : Chip8
