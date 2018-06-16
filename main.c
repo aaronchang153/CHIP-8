@@ -11,7 +11,7 @@ int SDL_main(int argc, char *argv[]){
         Graphics *display = Graphics_Create();
         if(display != NULL){
 
-            Chip8_Load_Application(chip8, "games/PONG");
+            Chip8_Load_Application(chip8, "games/INVADERS");
 
             SDL_Event event;
 
@@ -33,7 +33,7 @@ int SDL_main(int argc, char *argv[]){
                     Graphics_Draw_Screen(display, chip8->gfx);
                     chip8->draw_flag = 0;
                 }
-                SDL_Delay(30);
+                SDL_Delay(10);
             }
 
             Graphics_Destroy(display);
