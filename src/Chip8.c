@@ -246,8 +246,14 @@ void Chip8_Decode_Dxxx(Chip8 *c){
 void Chip8_Decode_Exxx(Chip8 *c){
     switch(c->opcode & 0x00FF){
         case 0x9E: // 0xEX9E: Skip next inst if key stored in VX is pressed
+            if(c->key_presses[c->V[X(c->opcode)]] == 1){
+                c->pc += 2;
+            }
             break;
         case 0xA1: // 0xEXA1: Skip next inst if key stored in VX is not pressed
+            if(c->key_presses[c->V[X(c->opcode)]] == 0){
+                c->pc += 2;
+            }
             break;
     }
     c->pc += 2;
@@ -255,6 +261,7 @@ void Chip8_Decode_Exxx(Chip8 *c){
 
 void Chip8_Decode_Fxxx(Chip8 *c){
     int i;
+    unsigned char key; // Used in blocking keypress (0xFX0A)
     unsigned char temp; // Used in BCD (0xFX33)
 
     switch(c->opcode & 0x00FF){
@@ -262,6 +269,10 @@ void Chip8_Decode_Fxxx(Chip8 *c){
             c->V[X(c->opcode)] = c->delay_timer;
             break;
         case 0x0A: // 0xFX0A: Blocks until keypress, then stores the press in VX
+            key = blockingInput();
+            if(key >= 0 && key < 16){
+                c->V[X(c->opcode)] = key;
+            }
             break;
         case 0x15: // 0xFX15: delay_timer = VX
             c->delay_timer = c->V[X(c->opcode)];
