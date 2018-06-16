@@ -67,6 +67,7 @@ char Chip8_Load_Application(Chip8 *c, char *name){
             c->memory[0x0200 + read] = buffer;
             read++;
         }
+        fclose(fp);
         return 0;
     }
 }
